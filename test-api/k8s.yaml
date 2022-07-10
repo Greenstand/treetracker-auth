@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treetracker-test-api
+spec:
+  selector:
+    matchLabels:
+      app: treetracker-test-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: treetracker-test-api
+    spec:
+      containers:
+      - name: treetracker-test-api
+        image: treetracker-test-api
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: treetracker-test-api-service
+  annotations:
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+  selector:
+    app: treetracker-test-api
+
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: treetracker-test-api-mapping
+  namespace: default
+spec:
+  hostname: "*"
+  prefix: /api/
+  service: treetracker-test-api-service
+  rewrite: /
+  timeout_ms: 60000

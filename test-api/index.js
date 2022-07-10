@@ -1,12 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 console.log("starting...");
 
+
+
+app.use(cors());
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello API!');
 });
 
 app.get("*", (req, res, next) => {
@@ -19,8 +24,7 @@ app.get("*", (req, res, next) => {
   console.log("params:", req.params);
   console.log("method:", req.method);
   console.log("headers:", req.headers);
-  console.log("403, bad request");
-  res.status(403).send("bad request");
+  res.status(200).send("OK");
 });
 
 app.post("*", (req, res, next) => {
@@ -33,12 +37,11 @@ app.post("*", (req, res, next) => {
   console.log("params:", req.params);
   console.log("method:", req.method);
   console.log("headers:", req.headers);
-  console.log("403, bad request");
-  res.status(403).send("bad request for post");
+  res.status(201).send("OK");
 });
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!!');
+  console.log('Example api listening on port 3000!!');
 });
 
 
