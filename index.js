@@ -1,13 +1,23 @@
 const express = require('express');
+const Keycloak = require('keycloak-connect');
+const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');
 console.log("starting...");
+
+const memoryStore = new session.MemoryStore();
+const keycloak = new Keycloak({
+  store: memoryStore,
+});
 
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+
+app.get('/settings', keycloak.enforcer('web-map-setting:view'), (req, res) => res.status(200).json({ ok: true }));
 
 app.get("*", (req, res, next) => {
   console.log("request: " + req.url);
@@ -38,7 +48,7 @@ app.post("*", (req, res, next) => {
 });
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!!');
+  console.log('Example app listening on port 3000!!!');
 });
 
 

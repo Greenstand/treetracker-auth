@@ -1,0 +1,53 @@
+{
+  "realm": "treetracker",
+  "bearer-only": true,
+  "auth-server-url": "https://dev-k8s.treetracker.org/auth/",
+  "ssl-required": "external",
+  "resource": "api-services",
+  "confidential-port": 0,
+  "credentials": {
+    "secret": "2af556a8-7a93-4358-8973-9167c01a48a7xxx"
+  },
+  "policy-enforcer": {
+    "user-managed-access": {},
+    "enforcement-mode": "ENFORCING",
+    "pathsDeprecated": [
+      {
+        "name": "web-map-theme",
+        "path": "/organizations/{organization_id}/theme",
+        "methods": [
+          {
+            "method": "GET",
+            "scopes": [
+              "urn:app.com:scopes:view"
+            ]
+          },
+          {
+            "method": "POST",
+            "scopes": [
+              "urn:app.com:scopes:create"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setttings2",
+        "path": "/settings2",
+        "methods": [
+          {
+            "method": "GET",
+            "scopes": [
+              "urn:app.com:scopes:edit"
+            ]
+          },
+          {
+            "method": "POST",
+            "scopes": [
+              "urn:app.com:scopes:create"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
