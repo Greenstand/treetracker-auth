@@ -1,3 +1,19 @@
+// intercept http
+const https = require('https');
+const request = https.request;
+https.request = (...args) => {
+  console.warn('https.request is called:', args);
+  console.error("mock https:");
+  return request(...args)
+};
+const http = require('http');
+const requestHttp = http.request;
+http.request = (...args) => {
+  console.warn('http.request is called:', args);
+  console.error("mock http:");
+  return requestHttp(...args)
+};
+
 const express = require('express');
 const Keycloak = require('keycloak-connect');
 const session = require('express-session');
@@ -10,6 +26,8 @@ const keycloak = new Keycloak({
   store: memoryStore,
 });
 
+console.warn("keycloak!:", keycloak);
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -17,7 +35,10 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/settings', keycloak.enforcer('web-map-setting:view'), (req, res) => res.status(200).json({ ok: true }));
+app.get('/api/settings', keycloak.enforcer('web-map-setting:view'), (req, res) => {
+  log.warn("GET /settings...");
+  res.status(200).json({ ok: true });
+})
 
 app.get("*", (req, res, next) => {
   console.log("request: " + req.url);

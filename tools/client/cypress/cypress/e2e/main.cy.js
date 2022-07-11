@@ -14,6 +14,7 @@ describe('main', () => {
     
     console.warn("request api");
 
+    //cy.pause();
     cy.contains("API:settings").click();
   })
 })

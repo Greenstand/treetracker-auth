@@ -7,6 +7,7 @@ FROM node
 COPY index.js .
 COPY package.json .
 COPY package-lock.json .
+COPY keycloak.json .
 # Define GOTRACEBACK to mark this container as using the Go language runtime
 # for `skaffold debug` (https://skaffold.dev/docs/workflows/debug/).
 #ENV GOTRACEBACK=single
