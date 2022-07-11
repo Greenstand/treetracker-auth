@@ -1,6 +1,8 @@
 
 describe('main', () => {
   it('main workflow: login, request api', () => {
+    cy.clearCookies();
+    cy.clearLocalStorage();
     // login
     cy.visit('http://localhost:5000/');
     cy.contains("Client App");
@@ -14,7 +16,11 @@ describe('main', () => {
     
     console.warn("request api");
 
-    //cy.pause();
+    cy.pause();
     cy.contains("API:settings").click();
+    cy.pause();
+    cy.contains("Logout").click();
+
+    cy.contains("Sign in");
   })
 })

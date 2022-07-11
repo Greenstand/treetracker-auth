@@ -10,19 +10,22 @@
     <script src="lib/jwt-decode.min.js"></script>
     -->
 
-    <script src="https://localhost/auth/js/keycloak.js"></script>
-    <script src="https://localhost/auth/js/keycloak-authz.js"></script>
+    <script src="https://test.dadiorxxx.com/auth/js/keycloak.js"></script>
+    <script src="https://test.dadiorxxx.com/auth/js/keycloak-authz.js"></script>
     <script >
       var keycloak;
       var auzTemp;
       window.onload = function() {
         keycloak = new Keycloak({
-          url: 'https://localhost/auth',
+          url: 'https://test.dadiorxxx.com/auth',
           realm: 'treetracker',
           clientId: 'webmap',
           // realm: 'quickstart',
           // clientId: 'webmap-client',
         });
+	console.warn("keycloak:", keycloak);
+	// force logout everytime
+	// keycloak.logout();
   //        var keycloakAuthz = new KeycloakAuthz(keycloak);
         keycloak.init({onLoad: 'login-required'}).success(function () {
           console.log('User is now authenticated.');
@@ -68,7 +71,7 @@
       }
 
       function handleAPI(){
-        fetch('https://localhost/api/organizations/178/theme', {
+        fetch('https://test.dadiorxxx.com/api/organizations/178/theme', {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + keycloak.token,
@@ -78,7 +81,7 @@
       }
 
       function handleAPI2(){
-        fetch('https://localhost/api/settings', {
+        fetch('https://test.dadiorxxx.com/api/settings', {
           method: 'GET',
           headers: {
             'Authorization': 'Bearer ' + keycloak.token,
@@ -86,14 +89,21 @@
           }
         })
       }
+
+      function handleLogout(){
+      	console.warn("begin logout");
+	window.location.href = keycloak.createLogoutUrl();
+      }
     </script>
 </head>
 
 <body>
   <h1>Client App</h1>
   <button onclick={javascript:handleLogin();} >Login</button>
+  <button onclick={javascript:handleLogout();} >Logout</button>
   <button onclick={javascript:handleAPI();} >API</button>
-  <button onclick={javascript:handleAPI2();} >API:settings</button>
+  <button onclick={javascript:handleAPI2();} >API:settings:view</button>
+  <button onclick={javascript:handleAPI3();} >API:settings:edit</button>
   <div>user:
     <div id="user" />
   </div>
