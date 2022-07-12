@@ -29,6 +29,7 @@
   //        var keycloakAuthz = new KeycloakAuthz(keycloak);
         keycloak.init({onLoad: 'login-required'}).success(function () {
           console.log('User is now authenticated.');
+	  console.log("loaded token:", keycloak.token);
           document.getElementById('token').innerHTML = "loaded token: " + keycloak.token;
           keycloak.loadUserProfile().
             success(function (profile) {
@@ -54,6 +55,7 @@
                 console.warn('entitlement', res);
                 const r = jwt_decode(res);
                 console.warn('r', r);
+                console.log(JSON.stringify(r, undefined,2));
                 console.warn("rpt:", auzTemp.rpt);
                 document.getElementById('rpt').innerHTML = "loaded rpt: " + auzTemp.rpt;
               });
@@ -74,18 +76,24 @@
         fetch('https://test.dadiorxxx.com/api/organizations/178/theme', {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + keycloak.token,
-            //'Authorization': 'Bearer ' + auzTemp.rpt,
+            //'Authorization': 'Bearer ' + keycloak.token,
+            'Authorization': 'Bearer ' + auzTemp.rpt,
           }
-        })
+        }).then(function(response) {
+	  console.log('response', response);
+	  return response.json();
+	}).then(function(json) {
+	  console.log('json', json);
+	  document.getElementById('settings').innerHTML = "loaded settings: " + JSON.stringify(json, undefined,2);
+	});
       }
 
       function handleAPI2(){
         fetch('https://test.dadiorxxx.com/api/settings', {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + keycloak.token,
-            //'Authorization': 'Bearer ' + auzTemp.rpt,
+            //'Authorization': 'Bearer ' + keycloak.token,
+            'Authorization': 'Bearer ' + auzTemp.rpt,
           }
         })
       }
@@ -112,6 +120,9 @@
   </div>
   <div>token:
     <div id="token" />
+  </div>
+  <div>settings:
+    <div id="settings" />
   </div>
 
 </body>
