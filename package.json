@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mswjs/interceptors": "^0.17.2",
     "express": "^4.17.2",
     "express-session": "^1.17.3",
     "keycloak-connect": "^18.0.2"

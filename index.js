@@ -1,18 +1,25 @@
 // intercept http
-const https = require('https');
-const request = https.request;
-https.request = (...args) => {
-  console.warn('https.request is called:', args);
-  console.error("mock https:");
-  return request(...args)
-};
-const http = require('http');
-const requestHttp = http.request;
-http.request = (...args) => {
-  console.warn('http.request is called:', args);
-  console.error("mock http:");
-  return requestHttp(...args)
-};
+const {ClientRequestInterceptor} = require("@mswjs/interceptors/lib/interceptors/ClientRequest");
+interceptor = new ClientRequestInterceptor();
+
+// Listen to any "http.ClientRequest" being dispatched,
+// and log its method and full URL.
+interceptor.on('request', (request) => {
+  console.warn("xxx  inte request:", request.method, request.url.href)
+})
+
+// Listen to any responses sent to "http.ClientRequest".
+// Note that this listener is read-only and cannot affect responses.
+interceptor.on('response', (response, request) => {
+  console.warn('xxx interceptor responce',
+    'response to %s %s was:',
+    request.method,
+    //request.url.href,
+    response
+  )
+})
+
+interceptor.apply();
 
 const express = require('express');
 const Keycloak = require('keycloak-connect');
