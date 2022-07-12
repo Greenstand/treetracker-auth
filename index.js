@@ -1,3 +1,5 @@
+// ignore ssl verification
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 // intercept http
 const {ClientRequestInterceptor} = require("@mswjs/interceptors/lib/interceptors/ClientRequest");
 interceptor = new ClientRequestInterceptor();
@@ -6,6 +8,7 @@ interceptor = new ClientRequestInterceptor();
 // and log its method and full URL.
 interceptor.on('request', (request) => {
   console.warn("xxx  inte request:", request.method, request.url.href)
+  console.warn("request:", request);
 })
 
 // Listen to any responses sent to "http.ClientRequest".
@@ -22,7 +25,7 @@ interceptor.on('response', (response, request) => {
 interceptor.apply();
 
 const express = require('express');
-const Keycloak = require('keycloak-connect');
+const Keycloak = require('./keycloak-connect/keycloak');
 const session = require('express-session');
 const app = express();
 const bodyParser = require('body-parser');

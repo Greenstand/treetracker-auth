@@ -8,9 +8,12 @@ COPY index.js .
 COPY package.json .
 COPY package-lock.json .
 COPY keycloak.json .
+# copy folder recursively
+COPY keycloak-connect keycloak-connect
 # Define GOTRACEBACK to mark this container as using the Go language runtime
 # for `skaffold debug` (https://skaffold.dev/docs/workflows/debug/).
 #ENV GOTRACEBACK=single
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 RUN npm install -g cnpm
 RUN cnpm ci
 CMD ["npm", "start"]
