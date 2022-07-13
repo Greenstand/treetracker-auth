@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 // ignore ssl verification
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 // intercept http
@@ -44,6 +46,15 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+// load routers for keycloak
+const configPath = path.resolve(__dirname, "./keycloak.json");
+const config = JSON.parse(fs.readFileSync(configPath));
+const paths = config["policy-enforcer"].paths;
+const keycloakEnforcer = (...arg) => keycloak.enforcer(...arg);
+const {getRouters} = require("./keycloak-utils");
+const routers = getRouters(paths, keycloakEnforcer);
+
+routers.forEach(router => app.use(router.router));
 
 //app.get(
 //  '/api/settings', 

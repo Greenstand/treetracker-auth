@@ -8,6 +8,7 @@ COPY index.js .
 COPY package.json .
 COPY package-lock.json .
 COPY keycloak.json .
+COPY keycloak-utils.js .
 # copy folder recursively
 COPY keycloak-connect keycloak-connect
 # Define GOTRACEBACK to mark this container as using the Go language runtime
