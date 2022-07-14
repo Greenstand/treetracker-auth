@@ -49,7 +49,7 @@ function getRouters(paths, keycloakEnforcer){
       const {method:methodStr, scopes} = method;
       const permissions = scopes.map(scope => `${resourceName}:${scope}`);
       const router = express.Router();
-      router.use(pathStr, keycloakEnforcer(permissions), (req, res) => {
+      router[methodStr.toLowerCase()](pathStr, keycloakEnforcer(permissions), (req, res) => {
         res.status(200).json({ ok: true });
       });
       routers.push({

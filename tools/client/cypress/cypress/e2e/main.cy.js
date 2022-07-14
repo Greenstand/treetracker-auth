@@ -17,8 +17,10 @@ describe('main', () => {
     console.warn("request api");
 
     //cy.pause();
-    cy.contains("API:settings").click();
-    cy.wait(1000*5);
+    cy.contains("API:settings:view").click();
+    cy.wait(1000*2);
+    cy.contains("API:settings:edit").click();
+    cy.wait(1000*2);
     //cy.pause();
     cy.contains("Logout").click();
 

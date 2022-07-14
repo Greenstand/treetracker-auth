@@ -98,6 +98,16 @@
         })
       }
 
+      function handleAPI3(){
+        fetch('https://test.dadiorxxx.com/api/settings', {
+          method: 'POST',
+          headers: {
+            //'Authorization': 'Bearer ' + keycloak.token,
+            'Authorization': 'Bearer ' + auzTemp.rpt,
+          }
+        })
+      }
+
       function handleLogout(){
       	console.warn("begin logout");
 	window.location.href = keycloak.createLogoutUrl();
