@@ -49,7 +49,26 @@ function getRouters(paths, keycloakEnforcer){
       const {method:methodStr, scopes} = method;
       const permissions = scopes.map(scope => `${resourceName}:${scope}`);
       const router = express.Router();
-      router[methodStr.toLowerCase()](pathStr, keycloakEnforcer(permissions), (req, res) => {
+      let claimCustom = undefined;
+      if(pathStr.indexOf(":") >= 0){
+        console.warn("there is param in the path, convert to claim");
+        claimCustom = {
+          claims: function (request) {
+            let custom;
+            if(request.params){
+              custom = [Object.values(request.params).join(",")];
+            }else{
+              console.error("param is required");
+            }
+            console.warn("claim custom:", custom);
+            return {
+              custom,
+            }
+          }
+        }
+      }
+
+      router[methodStr.toLowerCase()](pathStr, keycloakEnforcer(permissions, claimCustom), (req, res) => {
         res.status(200).json({ ok: true });
       });
       routers.push({

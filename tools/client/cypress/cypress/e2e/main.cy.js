@@ -21,6 +21,10 @@ describe('main', () => {
     cy.wait(1000*2);
     cy.contains("API:settings:edit").click();
     cy.wait(1000*2);
+    cy.contains("GET /api/organizations/1").click();
+    cy.wait(1000*2);
+    cy.contains("POST /api/organizations/1").click();
+    cy.wait(1000*2);
     //cy.pause();
     cy.contains("Logout").click();
 

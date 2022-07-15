@@ -11,6 +11,8 @@ interceptor = new ClientRequestInterceptor();
 interceptor.on('request', (request) => {
   console.warn("xxx  inte request:", request.method, request.url.href)
   console.warn("request:", request);
+  var decoder = new TextDecoder("utf-8");
+  console.warn("body:", decoder.decode(new Uint8Array(request._body)));
 })
 
 // Listen to any responses sent to "http.ClientRequest".

@@ -108,6 +108,26 @@
         })
       }
 
+      function handleAPI4(){
+        fetch('https://test.dadiorxxx.com/api/organizations/1', {
+          method: 'GET',
+          headers: {
+            //'Authorization': 'Bearer ' + keycloak.token,
+            'Authorization': 'Bearer ' + auzTemp.rpt,
+          }
+        })
+      }
+
+      function handleAPI5(){
+        fetch('https://test.dadiorxxx.com/api/organizations/1', {
+          method: 'POST',
+          headers: {
+            //'Authorization': 'Bearer ' + keycloak.token,
+            'Authorization': 'Bearer ' + auzTemp.rpt,
+          }
+        })
+      }
+
       function handleLogout(){
       	console.warn("begin logout");
 	window.location.href = keycloak.createLogoutUrl();
@@ -122,6 +142,8 @@
   <button onclick={javascript:handleAPI();} >API</button>
   <button onclick={javascript:handleAPI2();} >API:settings:view</button>
   <button onclick={javascript:handleAPI3();} >API:settings:edit</button>
+  <button onclick={javascript:handleAPI4();} >GET /api/organizations/1</button>
+  <button onclick={javascript:handleAPI5();} >POST /api/organizations/1</button>
   <div>user:
     <div id="user" />
   </div>

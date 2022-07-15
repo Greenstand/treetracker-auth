@@ -24,6 +24,11 @@ describe('keycloak-utils', () => {
     });
 
     expect(keycloakEnforcer.mock.calls[0][0]).toMatchObject(["web-map-settings:view"]);
+    expect(keycloakEnforcer.mock.calls[1][0]).toMatchObject(["web-map-settings:edit"]);
+    expect(keycloakEnforcer.mock.calls[2][0]).toMatchObject(["web-map-organizations:view"]);
+    expect(keycloakEnforcer.mock.calls[2][1]).toMatchObject({
+      claims: expect.anything(),
+    });
 
     const app = require('express')();
     routers.forEach(router => app.use(router.router));

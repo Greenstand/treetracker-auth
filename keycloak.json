@@ -6,7 +6,7 @@
   "resource": "treetracker-api",
   "confidential-port": 0,
   "credentials": {
-    "secret": "s2CvUodklqPxKBXu9vUQXijodo5kgUOf"
+    "secret": "ibHXuxtOFyrP9qGzR0I322t987a5V0Ia"
   },
   "policy-enforcer": {
     "user-managed-access": {},
@@ -15,6 +15,24 @@
       {
         "name": "web-map-settings",
         "path": "/api/settings",
+        "methods": [
+          {
+            "method": "GET",
+            "scopes": [
+              "view"
+            ]
+          },
+          {
+            "method": "POST",
+            "scopes": [
+              "edit"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "web-map-organizations",
+        "path": "/api/organizations/:organizationId",
         "methods": [
           {
             "method": "GET",
