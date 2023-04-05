@@ -1,12 +1,12 @@
 {
   "realm": "treetracker",
   "bearer-only": true,
-  "auth-server-url": "https://test.dadiorxxx.com/auth/",
+  "auth-server-url": "https://treetracker.local/auth/",
   "ssl-required": "external",
-  "resource": "treetracker-api",
+  "resource": "treetracker-service",
   "confidential-port": 0,
   "credentials": {
-    "secret": "ibHXuxtOFyrP9qGzR0I322t987a5V0Ia"
+    "secret": "2h5dJULYCYPlinUXB7CKyCQN27IINPkL"
   },
   "policy-enforcer": {
     "user-managed-access": {},
