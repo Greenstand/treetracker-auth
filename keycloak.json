@@ -3,10 +3,10 @@
   "bearer-only": true,
   "auth-server-url": "https://treetracker.local/auth/",
   "ssl-required": "external",
-  "resource": "treetracker-service",
+  "resource": "microservice",
   "confidential-port": 0,
   "credentials": {
-    "secret": "2h5dJULYCYPlinUXB7CKyCQN27IINPkL"
+    "secret": "fBdqJjQ0KTtDDmfVZBJyjjn6FMYhKqQt"
   },
   "policy-enforcer": {
     "user-managed-access": {},
@@ -14,7 +14,7 @@
     "paths": [
       {
         "name": "web-map-settings",
-        "path": "/api/settings",
+        "path": "/api/web-map-settings",
         "methods": [
           {
             "method": "GET",
@@ -49,7 +49,7 @@
         ]
       },
       {
-        "name": "web-map-theme",
+        "name": "web-map-theme-organization",
         "path": "/organizations/{organization_id}/theme",
         "methods": [
           {

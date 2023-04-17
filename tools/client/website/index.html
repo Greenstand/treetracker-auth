@@ -51,7 +51,7 @@
 //            });
             setTimeout(() => {
               console.warn('auz', auzTemp);
-              auzTemp.entitlement('treetracker-service').then((res) => {
+              auzTemp.entitlement('microservice').then((res) => {
                 console.warn('entitlement', res);
                 const r = jwt_decode(res);
                 console.warn('r', r);
@@ -89,7 +89,7 @@
       }
 
       function handleAPI2(){
-        fetch('https://treetracker.local/api/settings', {
+        fetch('https://treetracker.local/api/web-map-settings', {
           method: 'GET',
           headers: {
             //'Authorization': 'Bearer ' + keycloak.token,
@@ -99,7 +99,7 @@
       }
 
       function handleAPI3(){
-        fetch('https://treetracker.local/api/settings', {
+        fetch('https://treetracker.local/api/web-map-settings', {
           method: 'POST',
           headers: {
             //'Authorization': 'Bearer ' + keycloak.token,
@@ -109,7 +109,7 @@
       }
 
       function handleAPI4(){
-        fetch('https://treetracker.local/api/organizations/1', {
+        fetch('https://treetracker.local/api/organizations/178', {
           method: 'GET',
           headers: {
             //'Authorization': 'Bearer ' + keycloak.token,
@@ -119,7 +119,7 @@
       }
 
       function handleAPI5(){
-        fetch('https://treetracker.local/api/organizations/1', {
+        fetch('https://treetracker.local/api/organizations/178', {
           method: 'POST',
           headers: {
             //'Authorization': 'Bearer ' + keycloak.token,
@@ -140,10 +140,10 @@
   <button onclick={javascript:handleLogin();} >Login</button>
   <button onclick={javascript:handleLogout();} >Logout</button>
   <button onclick={javascript:handleAPI();} >API</button>
-  <button onclick={javascript:handleAPI2();} >API:settings:view</button>
-  <button onclick={javascript:handleAPI3();} >API:settings:edit</button>
-  <button onclick={javascript:handleAPI4();} >GET /api/organizations/1</button>
-  <button onclick={javascript:handleAPI5();} >POST /api/organizations/1</button>
+  <button onclick={javascript:handleAPI2();} >API:web-map-settings:view</button>
+  <button onclick={javascript:handleAPI3();} >API:web-map-settings:edit</button>
+  <button onclick={javascript:handleAPI4();} >GET /api/organizations/178</button>
+  <button onclick={javascript:handleAPI5();} >POST /api/organizations/178</button>
   <div>user:
     <div id="user" />
   </div>

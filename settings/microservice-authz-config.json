@@ -1,0 +1,149 @@
+{
+  "allowRemoteResourceManagement": true,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Default Resource",
+      "type": "urn:microservice:resources:default",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "52e839a9-7559-41dc-a2f5-00261f76afa3",
+      "uris": [
+        "/*"
+      ]
+    },
+    {
+      "name": "web-map-theme",
+      "ownerManagedAccess": false,
+      "displayName": "web-map-theme",
+      "attributes": {},
+      "_id": "2ee77089-c47e-49df-bf82-918bbabf4210",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "view"
+        },
+        {
+          "name": "edit"
+        }
+      ]
+    },
+    {
+      "name": "web-map-settings",
+      "ownerManagedAccess": false,
+      "displayName": "web-map-settings",
+      "attributes": {},
+      "_id": "ba559d89-e0f4-4a35-adfa-a5c3ca29c56c",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "view"
+        },
+        {
+          "name": "edit"
+        }
+      ]
+    },
+    {
+      "name": "web-map-organizations",
+      "ownerManagedAccess": false,
+      "displayName": "web-map-organizations",
+      "attributes": {},
+      "_id": "91ea8ca4-7c9d-4483-b076-81347a818e73",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "view"
+        },
+        {
+          "name": "edit"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "b044cab0-2879-45e9-a2bd-0ed726243e9a",
+      "name": "Default Policy",
+      "description": "A policy that grants access only for users within this realm",
+      "type": "js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+      }
+    },
+    {
+      "id": "788ec1ab-a476-42bb-a5bd-647c2ccc5a51",
+      "name": "dadior",
+      "type": "user",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "users": "[\"dadior\"]"
+      }
+    },
+    {
+      "id": "873f6109-da1f-418c-9b86-83a406551b13",
+      "name": "organization-policy",
+      "description": "check if the user's org list matches the id of the resources",
+      "type": "js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "code": "print(\"xxxxxxxxxxxxxxxxx okay gront\");\n//$evaluation.deny();\nprint(\"debug...\");\nprint(\"$evaluation:\")\nprint($evaluation)\nvar context = $evaluation.getContext();\nprint(\"context:\");\nprint(context);\nprint(\"context.attributes:\")\nprint(context.getAttributes().toMap());\nvar identity = context.getIdentity();\nprint(\"indentity:\");\nprint(identity);\nvar attributes = identity.getAttributes();\nprint(\"attributes:\" )\nprint(attributes.toMap())\nvar permission = $evaluation.getPermission();\nprint(\"permission:\" )\nprint(permission)\nprint(permission.getClaims());\nprint(permission.getResource().getName());\nvar s = permission.getScopes().toArray();\nfor(var i=0; i < s.length; s++){\n    print(s[i].getName());\n}\n\nvar value = context.getAttributes().getValue(\"custom\");\nprint(\"value:\")\nprint(value)\nprint(\"as 0:\")\n\ntry{\n    print(value.asString(0))\n    var attributesMap = attributes.toMap();\n    var organization_id = attributesMap.organization_id;\n    print(\"organization_id:\")\n    print(organization_id);\n    if(value.asString(0) === organization_id[0]+\"\"){\n        print(\"custom attr match\");\n        $evaluation.grant();\n    }else{\n        print(\"custom attr unmatch\");\n        $evaluation.deny();\n    }\n}catch(e){\n    print(\"e:\")\n    print(e)\n    $evaluation.deny();\n}\n\n"
+      }
+    },
+    {
+      "id": "5f1ea935-27a1-4a90-be75-01805142a830",
+      "name": "Default Permission",
+      "description": "A permission that applies to the default resource type",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "defaultResourceType": "urn:microservice:resources:default",
+        "applyPolicies": "[\"Default Policy\"]"
+      }
+    },
+    {
+      "id": "6916a005-42fb-4365-b89e-fb7af2f533e5",
+      "name": "web-map-settings-view",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"web-map-settings\"]",
+        "scopes": "[\"view\"]",
+        "applyPolicies": "[\"dadior\"]"
+      }
+    },
+    {
+      "id": "7f6d2f7f-ed08-4094-9809-b138106e65a7",
+      "name": "web-map-organizations-view",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "resources": "[\"web-map-organizations\"]",
+        "scopes": "[\"view\"]",
+        "applyPolicies": "[\"organization-policy\"]"
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "id": "bb7660ba-b08f-40fd-ac21-3a1361b710c1",
+      "name": "view",
+      "iconUri": "",
+      "displayName": "view"
+    },
+    {
+      "id": "3db913f3-ae90-471a-94d2-4fa1d2d7bc21",
+      "name": "edit",
+      "iconUri": "edit",
+      "displayName": "edit"
+    }
+  ],
+  "decisionStrategy": "UNANIMOUS"
+}
