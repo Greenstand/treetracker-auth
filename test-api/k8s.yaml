@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: treetracker-test-api
-        image: treetracker-test-api
+        image: dadiorchen/treetracher-auth-test-api:test1
         ports:
         - containerPort: 3000
 
@@ -37,10 +37,9 @@ apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
   name: treetracker-test-api-mapping
-  namespace: default
 spec:
   hostname: "*"
-  prefix: /api/
+  prefix: /test-api/
   service: treetracker-test-api-service
   rewrite: /
   timeout_ms: 60000

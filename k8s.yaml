@@ -18,7 +18,7 @@ spec:
           - "treetracker.local"
       containers:
       - name: treetracker-auth
-        image: treetracker-auth
+        image: dadiorchen/treetracher-auth:test1
         ports:
         - containerPort: 3000
 
